@@ -1,0 +1,4 @@
+https://gitlab.com/-/snippets/2039434
+https://myanimelist.net/apiconfig/references/authorization#call-myanimelist-api
+https://myanimelist.net/apiconfig/references/api/v2#section/Authentication
+https://myanimelist.net/blog.php?eid=835707
