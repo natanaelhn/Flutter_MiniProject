@@ -24,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<MainProvider>().setAllListNull();
       context.read<MainProvider>().setIsUserAuthorized();
       context.read<MainProvider>().setAllList();
     });
@@ -47,7 +48,8 @@ class _MainScreenState extends State<MainScreen> {
       colorPrimary: MyColor.primaryColor,
       colorSecondary: MyColor.primaryColor,
       onRefresh: () async{
-        
+        mainProvider.setAllListNull(doNotifyListeners: true);
+        mainProvider.setAllList();
       },
 
       title: (isPortrait) => Padding(

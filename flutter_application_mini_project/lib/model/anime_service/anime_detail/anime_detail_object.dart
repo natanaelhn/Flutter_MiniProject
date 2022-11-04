@@ -53,7 +53,7 @@ class AnimeDetailObject{
   String? mediaType;
   String? status;
   List<String>? genres;
-  String? numEpisode;
+  int? numEpisode;
   int? startSeasonYear;
   String? startSeasonSeason;
   String? broadcastDay;
@@ -124,7 +124,7 @@ class AnimeDetailObject{
 
       for(Map<String, dynamic> i in json){
         value.add( RelatedAnimeObject(
-          object: i['node'] , 
+          object: AnimeDetailObject.fromJSON( i['node'] ), 
           relationTypeFormatted: i['relation_type_formatted'],
         ));
       }
@@ -162,7 +162,7 @@ class AnimeDetailObject{
       genres: (json.containsKey('genres'))? getListGenres(json['genres'].cast<Map<String, dynamic>>()) : null,
       numEpisode: (json.containsKey('num_episodes'))? json['num_episodes'] : null,
       startSeasonYear: (json.containsKey('start_season'))? json['start_season']['year'] : null,
-      startSeasonSeason: (json.containsKey('start_season'))? json['start_Season']['season'] : null,
+      startSeasonSeason: (json.containsKey('start_season'))? json['start_season']['season'] : null,
       broadcastDay: (json.containsKey('broadcast'))? json['broadcast']['day_of_the_week'] : null,
       broadcastTime: (json.containsKey('broadcast'))? json['broadcast']['start_time'] : null,
       source: (json.containsKey('source'))? json['source'] : null,
@@ -173,7 +173,7 @@ class AnimeDetailObject{
       relatedAnime: (json.containsKey('related_anime'))? getRelatedAnime(json['related_anime'].cast<Map<String, dynamic>>()) : null,
       recommendation: (json.containsKey('recommendations'))? getRecommmendation(json['recommendations'].cast<Map<String, dynamic>>()) : null,
       studios: (json.containsKey('studios'))? getListStudios(json['studios'].cast<Map<String, dynamic>>()) : null,
-      statistics: (json.containsKey('statistics'))? AnimeStatisticObject.fromJSON(json['statistics']) : null,
+      statistics: (json.containsKey('statistics'))? AnimeStatisticObject.fromJSON(json['statistics']['status']) : null,
       myListStatus: (json.containsKey('my_list_status'))? MyListStatus.fromJSON(json['my_list_status']) : null,
     );
   }

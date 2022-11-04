@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_mini_project/common_widgets/my_image_loading_indicator/my_image_loading_indicator.dart';
 import 'package:flutter_application_mini_project/model/anime_service/anime_detail/anime_detail_object.dart';
+import 'package:flutter_application_mini_project/model/anime_service/anime_service.dart';
+import 'package:flutter_application_mini_project/model/my_token.dart';
+import 'package:flutter_application_mini_project/screen/detail_anime/detail_anime_screen.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
 
-class Top10ListContainer extends StatelessWidget {
-  const Top10ListContainer({super.key, required this.listAnimeDetail, required this.title});
+class Top10ListContainer extends StatefulWidget {
+  const Top10ListContainer({super.key, required this.listAnimeDetail, required this.title,});
 
   final List<AnimeDetailObject> listAnimeDetail;
   final String title;
 
+  @override
+  State<Top10ListContainer> createState() => _Top10ListContainerState();
+}
+
+class _Top10ListContainerState extends State<Top10ListContainer> {
   final double height = 150;
+
   final double width = 106.5;
 
   //A Widget to show picture of list item
-  Widget listItem(String? url, String name, bool isDummy){
+  Widget listItem(String? url, int id, String name, bool isDummy){
     return Padding(
       padding: const EdgeInsets.only(right: 5),
       child: 
@@ -47,16 +57,7 @@ class Top10ListContainer extends StatelessWidget {
                     }
                     
                     return (loadingProgress == null)? child 
-                      : Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            value: percent,
-                            color: Colors.white,
-                          ),
-                          Text((percent!*100).toInt().toString(), style: const TextStyle(color: Colors.white),)
-                        ],
-                      );
+                      : MyImageLoadingIndicator(percent: percent!);
                   }
                 ),
               ),
@@ -77,15 +78,28 @@ class Top10ListContainer extends StatelessWidget {
           Positioned.fill(child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: (){},
+              onTap: () async{
+                AnimeService animeService = AnimeService();
+                try{
+                  AnimeDetailObject animeDetailObject = await animeService.fetchGetAnimeDetail(id: id.toString());
+                  if(mounted){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => 
+                      DetailAnimeScreen(animeDetailObject: animeDetailObject),)
+                    );
+                  } 
+                }
+                catch(e){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Error when fetching data'))
+                  );
+                }
+              },
             ),
           ))
         ],
       ),
     );
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +121,7 @@ class Top10ListContainer extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, bottom: 8),
-            child: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+            child: Text(widget.title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
           ),
           const SizedBox(height: 5,),
           SizedBox(
@@ -115,14 +129,14 @@ class Top10ListContainer extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: listAnimeDetail.length + 2,
+              itemCount: widget.listAnimeDetail.length + 2,
               itemBuilder: (context, index){
                 if(index == 0){
                   return const SizedBox(width: 16,);
                 }
 
                 //More List Widget
-                else if(index == listAnimeDetail.length + 1){
+                else if(index == widget.listAnimeDetail.length + 1){
                   return Align(
                     alignment: Alignment.topLeft,
                     child: Material(
@@ -156,9 +170,14 @@ class Top10ListContainer extends StatelessWidget {
                   );
                 }
 
-                bool isDummy = (listAnimeDetail[index-1].id == -1)? true : false;
+                bool isDummy = (widget.listAnimeDetail[index-1].id == -1)? true : false;
 
-                return listItem(listAnimeDetail[index-1].mainPicture, listAnimeDetail[index-1].title, isDummy);
+                return listItem(
+                  widget.listAnimeDetail[index-1].mainPicture, 
+                  widget.listAnimeDetail[index-1].id,
+                  widget.listAnimeDetail[index-1].title, 
+                  isDummy
+                );
               },
             ),
           )

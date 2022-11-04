@@ -19,7 +19,7 @@ class MainProvider with ChangeNotifier{
 
   void setAnimeService(){
     if(_isUserAuthorized != null){
-      _animeService = AnimeService(_isUserAuthorized!);
+      _animeService = AnimeService();
       notifyListeners();
     }
   }
@@ -139,8 +139,13 @@ class MainProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  void setAllListNull(){
+  void setAllListNull({bool doNotifyListeners = false}){
     listTopAiring = null;
+    listTopUpcoming = null;
+    listSuggestion = null;
+    if(doNotifyListeners){
+      notifyListeners();
+    }
   }
 
 }

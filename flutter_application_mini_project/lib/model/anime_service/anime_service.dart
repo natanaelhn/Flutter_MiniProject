@@ -5,28 +5,41 @@ import 'package:flutter_application_mini_project/model/my_token.dart';
 
 class AnimeService{
 
-  AnimeService(bool isUserAuthorized){
-    _isUserAuthorized = isUserAuthorized;
-  }
+  AnimeService();
 
   final Dio _dio = Dio();
-  bool _isUserAuthorized = false;
 
   final String _url = 'https://api.myanimelist.net/v2/anime';
+
+
+
+
 
   Future<AnimeDetailObject> fetchGetAnimeDetail({required String id,}) async{
 
     final Response response = await _dio.get(
-      '$_url/$id/?fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics',
+      '$_url/$id?fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics',
     
       options: Options(
-        headers: (_isUserAuthorized)? {'Authorization' : MyToken.accessToken }
-          : { 'X-MAL-CLIENT-ID' : MyToken.clientId }
+        headers: {
+            'Authorization' : 'Bearer ${MyToken.accessToken}',
+            'X-MAL-CLIENT-ID' : MyToken.clientId,
+        }
       )
     );
 
+    try{
+      AnimeDetailObject animeDetailObject = AnimeDetailObject.fromJSON(response.data);
+      return animeDetailObject;
+    }
+    catch(e){
+      print(e.toString());
+    }
     return AnimeDetailObject.fromJSON(response.data);
   }
+
+
+
 
   Future<ListAnimeObject> fetchGetAnimeRanking({
     required String rankingType,
@@ -37,7 +50,7 @@ class AnimeService{
   }) async{
 
     final Response response = await _dio.get(
-      'https://api.myanimelist.net/v2/anime/ranking',
+      '$_url/ranking',
 
       queryParameters: {
         'ranking_type' : rankingType,
@@ -55,6 +68,10 @@ class AnimeService{
     );
     return ListAnimeObject.fromJSON(response.data);
   }
+
+
+
+
 
   Future<ListAnimeObject> fetchGetAnimeSuggestion({
     int? limit,
