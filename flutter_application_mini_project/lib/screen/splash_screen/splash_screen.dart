@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if(validAccess){
 
           // pageScreen = const MyHomeScreen();
-          pageScreen = const PickFavorite();
+          pageScreen = const PickFavorite(backButton: false,);
         }
         else{
           pageScreen = const AuthorizationScreen();

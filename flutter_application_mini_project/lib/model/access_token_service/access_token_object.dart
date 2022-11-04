@@ -1,6 +1,6 @@
 class AccessTokenObject{
 
-  AccessTokenObject({required this.accessToken, required this.refreshToken});
+  const AccessTokenObject({required this.accessToken, required this.refreshToken});
 
   final String accessToken;
   final String refreshToken;

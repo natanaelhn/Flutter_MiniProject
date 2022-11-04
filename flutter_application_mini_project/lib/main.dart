@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold_provider.dart';
 import 'package:flutter_application_mini_project/screen/authorization/authorization_provider.dart';
-import 'package:flutter_application_mini_project/screen/pick_favorite/pick_favorite.dart';
+import 'package:flutter_application_mini_project/screen/main/main_provider.dart';
 import 'package:flutter_application_mini_project/screen/pick_favorite/pick_favorite_provider.dart';
 import 'package:flutter_application_mini_project/screen/splash_screen/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +14,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => MyScaffoldProvider()),
       ChangeNotifierProvider(create: (context) => AuthorizationProvider()),
       ChangeNotifierProvider(create: (context) => PickFavoriteProvider()),
+      ChangeNotifierProvider(create: (context) => MainProvider(),),
     ],
     child: const MyApp()
   ));
@@ -43,8 +44,8 @@ class MyApp extends StatelessWidget {
       ),
 
       
-      home: const PickFavorite()
-      // home: const SplashScreen(),
+      home: const SplashScreen()
+      // home: const MyHomeScreen()
     );
   }
 }

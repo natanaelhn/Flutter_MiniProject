@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold_provider.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/widgets/my_appbar.dart';
+import 'package:flutter_application_mini_project/utils/my_color.dart';
 import 'package:provider/provider.dart';
 
 class MyScaffold extends StatefulWidget {
@@ -19,6 +20,7 @@ class MyScaffold extends StatefulWidget {
     this.backButton = true,
     this.backButtonColor = Colors.white,
     this.scaffoldBgColor = Colors.white,
+    this.onRefresh,
 
   });
   
@@ -34,6 +36,7 @@ class MyScaffold extends StatefulWidget {
   final bool backButton;
   final Color backButtonColor;
   final Color scaffoldBgColor;
+  final Future<void> Function()? onRefresh;
 
   @override
   State<MyScaffold> createState() => _MyScaffoldState();
@@ -91,6 +94,10 @@ class _MyScaffoldState extends State<MyScaffold> {
                               child: Center(
                                 child: tempChild
                               )
+                            ) : (widget.onRefresh != null) ? RefreshIndicator(
+                              onRefresh: widget.onRefresh!,
+                              color: MyColor.primaryColor,
+                              child: SingleChildScrollView(child: tempChild)
                             ) : SingleChildScrollView(child: tempChild)
                           )
                         ],
@@ -110,9 +117,10 @@ class _MyScaffoldState extends State<MyScaffold> {
               
                       Widget landscapeTitleContainer = (tempTitle == null)? const SizedBox(): Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(16),
+                        height: widget.size,
+                        padding: const EdgeInsets.only(left: 8),
                         color: (widget.colorSecondary == null)? Colors.amber : widget.colorSecondary,
-                        child: tempTitle,
+                        child: Align(alignment: Alignment.centerLeft, child: tempTitle),
                       );
               
               
@@ -147,7 +155,14 @@ class _MyScaffoldState extends State<MyScaffold> {
                           Expanded(
                             child: (!widget.scrollable)? landscapeChild : Stack(
                               children: [
-                                SingleChildScrollView(
+                                (widget.onRefresh != null) ? RefreshIndicator(
+                                  onRefresh: widget.onRefresh!,
+                                  color: MyColor.primaryColor,
+                                  child: SingleChildScrollView(
+                                    controller: childScrollController,
+                                    child: landscapeChild
+                                  ),
+                                ) : SingleChildScrollView(
                                   controller: childScrollController,
                                   child: landscapeChild
                                 ),

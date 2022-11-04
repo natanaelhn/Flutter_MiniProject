@@ -25,7 +25,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       },
 
       size: 50,
-      scrollable: false,
+      scrollable: true,
       backButton: true,
       backButtonColor: Colors.white,
       scaffoldBgColor: Colors.white,
@@ -93,9 +93,19 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
 
 
       //CHILD
-      child: (isPortrait) => Align(
-        alignment: Alignment.topLeft,
-        child: ElevatedButton(onPressed: (){}, child: Text('123'))
+      child: (isPortrait) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 200,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: 30,
+              itemBuilder: (context, index) => Text('$index# '),
+            ),
+          ),
+        ],
       )
     );
 

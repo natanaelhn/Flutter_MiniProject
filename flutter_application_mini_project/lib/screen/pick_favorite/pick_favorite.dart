@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold.dart';
 import 'package:flutter_application_mini_project/model/user_data.dart';
@@ -12,7 +11,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PickFavorite extends StatefulWidget {
-  const PickFavorite({super.key});
+  const PickFavorite({super.key, required this.backButton});
+
+  final bool backButton;
 
   @override
   State<PickFavorite> createState() => _PickFavoriteState();
@@ -37,7 +38,7 @@ class _PickFavoriteState extends State<PickFavorite> {
 
     return MyScaffold(
 
-      backButton: false,
+      backButton: widget.backButton,
       title: (isPortrait) => Text(
         'Pick your favorite category', 
         style: TextStyle(
@@ -235,9 +236,11 @@ class _PickFavoriteState extends State<PickFavorite> {
                             
                             if (mounted)
                             {
-                              Navigator.pushReplacement(context, MaterialPageRoute(
-                                builder: (context) => const MainScreen(),
-                              ));
+                              Navigator.pushAndRemoveUntil(
+                                context, 
+                                MaterialPageRoute(builder: (context) => const MainScreen(),), 
+                                (route) => false,
+                              );
                             }
                             
                           }

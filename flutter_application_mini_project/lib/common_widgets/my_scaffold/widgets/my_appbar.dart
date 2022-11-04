@@ -52,13 +52,13 @@ class MyAppbar extends StatelessWidget {
 
     List<Widget> tempList = [
       tempLeading,
-      (isPortrait)? tempTitle : const SizedBox(),
-      Expanded(
-        child: (isPortrait)? Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [...tempSubTrailing, ...tempTrailing],
-        )
-        : Column(
+      (isPortrait)? Expanded(child: tempTitle) : const SizedBox(),
+      (isPortrait)? Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [...tempSubTrailing, ...tempTrailing],
+      )
+      : Expanded(
+        child: Column(
           children: [
             Column(
               children: tempSubTrailing,
@@ -70,7 +70,7 @@ class MyAppbar extends StatelessWidget {
               )
             )
           ]
-        )
+        ),
       ),
     ];
     return tempList;
