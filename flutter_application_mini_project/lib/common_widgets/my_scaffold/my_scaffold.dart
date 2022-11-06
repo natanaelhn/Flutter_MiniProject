@@ -56,6 +56,7 @@ class _MyScaffoldState extends State<MyScaffold> {
 
     return Scaffold(
       backgroundColor: widget.scaffoldBgColor,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Column(

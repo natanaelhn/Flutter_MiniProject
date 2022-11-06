@@ -1,6 +1,7 @@
 import 'package:flutter_application_mini_project/model/anime_service/anime_detail/support_object/anime_statistic_object.dart';
 import 'package:flutter_application_mini_project/model/anime_service/anime_detail/support_object/my_list_status.dart';
 import 'package:flutter_application_mini_project/model/anime_service/anime_detail/support_object/related_anime_object.dart';
+import 'package:recase/recase.dart';
 
 class AnimeDetailObject{
 
@@ -68,6 +69,94 @@ class AnimeDetailObject{
   List<String>? studios;
   AnimeStatisticObject? statistics;
   MyListStatus? myListStatus;
+
+
+
+  String get mediaTypeFormatted{
+    List<String> temp = ['Unknown', 'TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music'];
+
+    for(String i in temp){
+      if(mediaType == i.toLowerCase()){
+        return i;
+      }
+    }
+
+    return '?';
+  }  
+
+  String get startSeasonSeasonFormatted{
+    List<String> temp = ['Winter', 'Spring', 'Summer', 'Fall'];
+
+    for(String i in temp){
+      if(startSeasonSeason == i.toLowerCase()){
+        return i;
+      }
+    }
+
+    return '?';
+  }
+
+  String get statusFormatted{
+    List<String> temp = ['Finished Airing', 'Currently Airing', 'Not yet Aired'];
+
+    for(String i in temp){
+      if(status == i.toLowerCase().replaceAll(RegExp(' '), '_')){
+        return i;
+      }
+    }
+
+    return '?';
+  }
+
+  String get averageEpisodeDurationMinute{
+    if(averageEpisodeDurationSecond != null){
+      return (averageEpisodeDurationSecond! / 60).round().toString();
+    }
+    return '?';
+  }
+
+  String get broadcastDayFormatted{
+    List<String> temp = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    for(String i in temp){
+      if(broadcastDay == i.toLowerCase()){
+        return i;
+      }
+    }
+
+    return '?';
+  }
+
+  String get ratingFormatted{
+    List<String> temp = ['g', 'pg', 'pg_13', 'r', 'r+', 'rx'];
+    List<String> temp2 = [
+      'G - All Ages',
+      'PG - Children',
+      'PG-13 - Teens 13 or Older',
+      'R-17+ - Violence & Profanity',
+      'R+ - Profanity & Mild Nudity',
+      'Rx - Hentai',
+    ];
+
+    for(int i = 0; i < temp.length; i++){
+      if(rating == temp[i]){
+        return temp2[i];
+      }
+    }
+
+    return '?';
+  }
+
+  String get sourceFormatted{
+    
+    if(source != null){
+      return ReCase(source!).titleCase;
+    }
+
+    return '?';
+  }
+
+
 
   
 

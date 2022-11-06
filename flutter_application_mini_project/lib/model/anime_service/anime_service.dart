@@ -33,7 +33,7 @@ class AnimeService{
       return animeDetailObject;
     }
     catch(e){
-      print(e.toString());
+      // print(e.toString());
     }
     return AnimeDetailObject.fromJSON(response.data);
   }

@@ -20,6 +20,7 @@ class PrimaryContainer extends StatelessWidget {
     return Container(
       height: height,
       width: width,
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -40,10 +41,7 @@ class PrimaryContainer extends StatelessWidget {
           )
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: child,
-      )
+      child: child
     );
   }
 }

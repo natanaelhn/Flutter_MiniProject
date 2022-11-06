@@ -5,6 +5,7 @@ import 'package:flutter_application_mini_project/model/anime_service/anime_detai
 import 'package:flutter_application_mini_project/model/my_token.dart';
 import 'package:flutter_application_mini_project/screen/main/main_provider.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/category_widget.dart';
+import 'package:flutter_application_mini_project/screen/main/widgets/main_circle_button.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/primary_container.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/top_10_list_container.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
@@ -79,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Anime List', style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w600),),
+                  const Text('My List', style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w600),),
                   const SizedBox(height: 10,),
                   const Text(
                     'It seems that your list is empty. Let\'s fill it with the one you love',
@@ -96,6 +97,19 @@ class _MainScreenState extends State<MainScreen> {
                 ]
               ),
             )
+          ),
+
+          //Circle button container
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MainCircleButton(title: 'My List', icon: Icons.list, onTap: (){},),
+                MainCircleButton(title: 'Seasonal', icon: Icons.calendar_month, onTap: (){},),
+                MainCircleButton(title: 'Forum', icon: Icons.forum, onTap: (){},),
+              ],
+            ),
           ),
 
 

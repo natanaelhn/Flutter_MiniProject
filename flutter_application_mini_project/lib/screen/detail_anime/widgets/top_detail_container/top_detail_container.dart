@@ -85,63 +85,107 @@ class _TopDetailContainerState extends State<TopDetailContainer> {
                   height: height,
                   width: width,
                   color: Colors.black26, 
-                  child: (widget.listImg.isNotEmpty)? PageView(
-                    controller: pageController,
-                    onPageChanged: (value) {
-                      topDetailContainerProvider.setIndex(value);
-                    },
-                    children: [
+                  child: (widget.listImg.isNotEmpty)? Builder(
+                    builder: (context) {
+                      
+                      List<Widget> pageViewItem = [
 
-                      //1 to 5 Image
-                      for(int i = 0; i < imgCount; i++)
-                        Image(image: NetworkImage(widget.listImg[i]), loadingBuilder: (context, child, loadingProgress) {
+                      ];
 
-                          double? percent;
-                          (loadingProgress != null)? percent = loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                            : null;
+                      return PageView(
+                        controller: pageController,
+                        onPageChanged: (value) {
+                          topDetailContainerProvider.setIndex(value);
+                        },
+                        children: [
 
-                          return (loadingProgress == null)? child
-                            : MyImageLoadingIndicator(percent: percent!);
-                        },),
+                          //1 to 5 Image
+                          for(int i = 0; i < imgCount; i++)
+                            Image(image: NetworkImage(widget.listImg[i]), loadingBuilder: (context, child, loadingProgress) {
 
-                      // More Image view
-                      (widget.listImg.length > imgCount)? Container(
-                        color: Colors.black26, 
-                        height: double.infinity, 
-                        width: double.infinity,
-                        
-                        //More Button
-                        child: Center(child: Stack(
-                          children: [
-                            Container(
-                              width: width * 5/10,
-                              height: width * 5/10,
-                              decoration: BoxDecoration(
-                                color: MyColor.primaryColor,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white)
-                              ),
-                              child: const Center(
-                                child: Text('More Picture', style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500
-                                ),)
-                              ),
-                            ),
+                              double? percent;
+                              (loadingProgress != null)? percent = loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                : null;
 
-                            Positioned.fill(
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  customBorder: const CircleBorder(),
-                                  onTap: (){},
+                              return (loadingProgress == null)? child
+                                : MyImageLoadingIndicator(percent: percent!);
+                            },),
+
+                          // More Image view
+                          if (widget.listImg.length > imgCount) Container(
+                            color: Colors.black26, 
+                            height: double.infinity, 
+                            width: double.infinity,
+                            
+                            //More Button
+                            child: Center(child: Stack(
+                              children: [
+                                Container(
+                                  width: width * 5/10,
+                                  height: width * 5/10,
+                                  decoration: BoxDecoration(
+                                    color: MyColor.primaryColor,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.white)
+                                  ),
+                                  child: const Center(
+                                    child: Text('More Picture', style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500
+                                    ),)
+                                  ),
                                 ),
-                              )
-                            )
-                          ],
-                        )),
-                      ): const SizedBox(),
-                    ],
+
+                                Positioned.fill(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      customBorder: const CircleBorder(),
+                                      onTap: (){
+                                        
+                                        //Show all image
+                                        showModalBottomSheet(
+                                          context: context, 
+                                          builder: (context) {
+                                            return GridView.count(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 8,
+                                              mainAxisSpacing: 8,
+                                              childAspectRatio: 71/100,
+                                              children: [
+                                                for(String i in widget.listImg)
+                                                  Container(
+                                                    color: MyColor.primaryColor,
+                                                    child: Image(
+                                                      image: NetworkImage(i),
+                                                      loadingBuilder: (context, child, loadingProgress) {
+                    
+                                                        if(loadingProgress == null){
+                                                          return child;
+                                                        }
+                                                        else{
+                                                          double percent = loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!;
+                                                          return MyImageLoadingIndicator(percent: percent);
+                                                        }
+
+                                                      },
+                                                    )
+                                                  )
+                                              ],
+                                            );
+                                          },
+                                        );
+
+                                      },
+                                    ),
+                                  )
+                                )
+                              ],
+                            )),
+                          )
+                        ],
+                      );
+                    }
                   )
                     : Center(
                       child: SizedBox(
@@ -175,6 +219,17 @@ class _TopDetailContainerState extends State<TopDetailContainer> {
                               color: (topDetailContainerProvider.index == i)? Colors.white 
                                 : MyColor.secondaryColor,
                             ),
+                            child: (topDetailContainerProvider.index == i)? FittedBox(
+                              fit: BoxFit.none,
+                              child: Container(
+                                height: 5, 
+                                width: 5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: MyColor.primaryColor
+                                ),
+                              ),
+                            ) : const SizedBox(),
                           )
                       ]
                     ),
