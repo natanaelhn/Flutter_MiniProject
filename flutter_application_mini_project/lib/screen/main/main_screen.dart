@@ -1,6 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_column_divider/my_column_divider.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold.dart';
+import 'package:flutter_application_mini_project/utils/my_notification.dart';
 import 'package:flutter_application_mini_project/utils/my_token.dart';
 import 'package:flutter_application_mini_project/screen/main/main_provider.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/category_widget.dart';
@@ -75,27 +77,43 @@ class _MainScreenState extends State<MainScreen> {
           //PrimaryContainer
           Padding(
             padding: const EdgeInsets.all(16),
-            child: PrimaryContainer(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('My List', style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w600),),
-                  const SizedBox(height: 10,),
-                  const Text(
-                    'It seems that your list is empty. Let\'s fill it with the one you love',
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                  ),
-                  const SizedBox(height: 5,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text('Add list', style: TextStyle(color: Colors.white),),
-                      Icon(Icons.chevron_right, color: Colors.white,)
+            child: Stack(
+              children: [
+                PrimaryContainer(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('My List', style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w600),),
+                      const SizedBox(height: 10,),
+                      const Text(
+                        'It seems that your list is empty. Let\'s fill it with the one you love',
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                      const SizedBox(height: 5,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Text('Add list', style: TextStyle(color: Colors.white),),
+                          Icon(Icons.chevron_right, color: Colors.white,)
+                        ]
+                      ),
                     ]
                   ),
-                ]
-              ),
+                ),
+
+                Positioned.fill(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20) ,
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MyListAnimeScreen(),));
+                      },
+                    ),
+                  ),
+                )
+              ],
             )
           ),
 
@@ -109,7 +127,28 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const MyListAnimeScreen(),));
                 },),
                 MainCircleButton(title: 'Seasonal', icon: Icons.calendar_month, onTap: (){},),
-                MainCircleButton(title: 'Forum', icon: Icons.forum, onTap: (){},),
+                MainCircleButton(title: 'Forum', icon: Icons.forum, onTap: () {
+                  AwesomeNotifications().isNotificationAllowed().then((isAllowed) async{
+                    if (!isAllowed) {
+                      AwesomeNotifications().requestPermissionToSendNotifications();
+                    }
+                    else {
+                      await AwesomeNotifications().createNotification(
+                        content: NotificationContent(
+                          id: 10,
+                          channelKey: MyNotification.channelKey,
+                          title: 'Test Notification',
+                          body: 'Test Notification from Forum Button',
+                          actionType: ActionType.Default,
+                        ),
+                        schedule: NotificationInterval(interval: 5)
+                      );
+                      
+                    }
+                  });
+
+                  
+                },),
               ],
             ),
           ),

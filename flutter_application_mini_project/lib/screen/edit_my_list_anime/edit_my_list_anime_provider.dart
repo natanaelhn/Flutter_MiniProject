@@ -60,7 +60,7 @@ class EditMyListAnimeProvider with ChangeNotifier{
     );
   }
 
-  void deleteMyListAnime({required int id}) async{
+  Future<void> deleteMyListAnime({required int id}) async{
     await _animeService.deleteMyListAnime(id: id);
   }
 

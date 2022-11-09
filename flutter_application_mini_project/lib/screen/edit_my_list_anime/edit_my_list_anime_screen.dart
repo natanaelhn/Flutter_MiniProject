@@ -1,8 +1,10 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold.dart';
 import 'package:flutter_application_mini_project/model/anime_detail_object.dart';
 import 'package:flutter_application_mini_project/screen/edit_my_list_anime/edit_my_list_anime_provider.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
+import 'package:flutter_application_mini_project/utils/my_notification.dart';
 import 'package:provider/provider.dart';
 
 class EditMyListAnimeScreen extends StatefulWidget {
@@ -257,6 +259,7 @@ class _EditMyListAnimeScreenState extends State<EditMyListAnimeScreen> {
                         builder: (context, providerValue, child) => Checkbox(
                           value: providerValue.remindMe, 
                           onChanged: (value) {
+
                             providerValue.setRemindMe(value!);
                           },
                         )
@@ -306,8 +309,13 @@ class _EditMyListAnimeScreenState extends State<EditMyListAnimeScreen> {
                                 customBorder: const CircleBorder(),
                                 onTap: () async{
                                   try{
-                                    context.read<EditMyListAnimeProvider>().deleteMyListAnime(id: widget.animeDetailObject.id);
-                                    Navigator.pop(context, true);
+                                    await context.read<EditMyListAnimeProvider>().deleteMyListAnime(id: widget.animeDetailObject.id);
+                                    if(mounted){
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Deleting list success'))
+                                      );
+                                      Navigator.pop(context, true);
+                                    }
                                   }
                                   catch(e){
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -352,6 +360,26 @@ class _EditMyListAnimeScreenState extends State<EditMyListAnimeScreen> {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           const SnackBar(content: Text('Updating list is success'))
                                         );
+                                        if(context.read<EditMyListAnimeProvider>().remindMe == true){
+                                          AwesomeNotifications().isNotificationAllowed().then((isAllowed) async{
+                                            if (!isAllowed) {
+                                              AwesomeNotifications().requestPermissionToSendNotifications();
+                                            }
+                                            else {
+                                              await AwesomeNotifications().createNotification(
+                                                content: NotificationContent(
+                                                  id: 10,
+                                                  channelKey: MyNotification.channelKey,
+                                                  title: '${widget.animeDetailObject.title} is live',
+                                                  body: 'Hurry up grab your TV remote',
+                                                  actionType: ActionType.Default,
+                                                ),
+                                                schedule: NotificationInterval(interval: 5)
+                                              );
+                                              
+                                            }
+                                          });
+                                        }
                                         Navigator.pop(context, true);
                                       }
                                     }
