@@ -34,8 +34,8 @@ class PrimaryContainer extends StatelessWidget {
         border: Border.all(color: MyColor.secondaryColor, width: 0.7),
         boxShadow: const [
           BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 0,
+            blurRadius: 2,
+            spreadRadius: 1,
             offset: Offset(0, 0),
             color: Colors.black45
           )

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold.dart';
-import 'package:flutter_application_mini_project/model/user_data.dart';
+import 'package:flutter_application_mini_project/utils/user_data.dart';
 import 'package:flutter_application_mini_project/screen/main/main_screen.dart';
 import 'package:flutter_application_mini_project/screen/pick_favorite/pick_favorite_provider.dart';
 import 'package:flutter_application_mini_project/screen/pick_favorite/widgets/picture_container.dart';

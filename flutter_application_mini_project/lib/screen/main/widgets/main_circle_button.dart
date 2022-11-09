@@ -20,7 +20,11 @@ class MainCircleButton extends StatelessWidget {
               height: 55,
               width: 55,
               decoration: BoxDecoration(
-                shape: BoxShape.circle, 
+                shape: BoxShape.circle,
+                border: Border.all(color: MyColor.secondaryColor, width: 2),
+                boxShadow: const [
+                  BoxShadow(spreadRadius: 1, blurRadius: 2, color: Colors.black45)
+                ],
                 // gradient: LinearGradient(
                 //   begin: Alignment.centerLeft,
                 //   end: Alignment.centerRight,
@@ -39,9 +43,20 @@ class MainCircleButton extends StatelessWidget {
         ),
 
         //Material and InkWell
-        Positioned.fill(child: Material(color: Colors.transparent, child: InkWell(
-          onTap: onTap,
-        ),))
+        Positioned.fill(child: Material(
+          color: Colors.transparent,  
+          child: InkWell(
+            customBorder: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), 
+                topRight: Radius.circular(25), 
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              )
+            ),
+            onTap: onTap,
+          ),
+        ))
       ],
     );
   }

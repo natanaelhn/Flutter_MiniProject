@@ -1,4 +1,4 @@
-import 'package:flutter_application_mini_project/model/secret.dart';
+import 'package:flutter_application_mini_project/utils/secret.dart';
 
 class MyToken{
 

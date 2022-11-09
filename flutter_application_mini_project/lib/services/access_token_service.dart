@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_application_mini_project/model/access_token_service/access_token_object.dart';
-import 'package:flutter_application_mini_project/model/my_token.dart';
+import 'package:flutter_application_mini_project/model/access_token_object.dart';
+import 'package:flutter_application_mini_project/utils/my_token.dart';
 
 class AccessTokenService{
 

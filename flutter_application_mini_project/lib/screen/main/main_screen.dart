@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_column_divider/my_column_divider.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_scaffold/my_scaffold.dart';
-import 'package:flutter_application_mini_project/model/anime_service/anime_detail/anime_detail_object.dart';
-import 'package:flutter_application_mini_project/model/my_token.dart';
+import 'package:flutter_application_mini_project/utils/my_token.dart';
 import 'package:flutter_application_mini_project/screen/main/main_provider.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/category_widget.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/main_circle_button.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/primary_container.dart';
 import 'package:flutter_application_mini_project/screen/main/widgets/top_10_list_container.dart';
+import 'package:flutter_application_mini_project/screen/my_list_anime/my_list_anime_screen.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +23,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
 
+    context.read<MainProvider>().setAllListNull();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<MainProvider>().setAllListNull();
       context.read<MainProvider>().setIsUserAuthorized();
       context.read<MainProvider>().setAllList();
     });
@@ -36,12 +36,12 @@ class _MainScreenState extends State<MainScreen> {
 
     MainProvider mainProvider = Provider.of<MainProvider>(context, listen: false);
 
-    // Dummy List
-    List<AnimeDetailObject> list = [];
+    // // Dummy List
+    // List<AnimeDetailObject> list = [];
 
-    for(int i = 0; i < 10; i++){
-      list.add(AnimeDetailObject(id: -1, title: 'Example Title'));
-    }
+    // for(int i = 0; i < 10; i++){
+    //   list.add(AnimeDetailObject(id: -1, title: 'Example Title'));
+    // }
 
     return MyScaffold(
       backButton: false,
@@ -105,7 +105,9 @@ class _MainScreenState extends State<MainScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                MainCircleButton(title: 'My List', icon: Icons.list, onTap: (){},),
+                MainCircleButton(title: 'My List', icon: Icons.list, onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MyListAnimeScreen(),));
+                },),
                 MainCircleButton(title: 'Seasonal', icon: Icons.calendar_month, onTap: (){},),
                 MainCircleButton(title: 'Forum', icon: Icons.forum, onTap: (){},),
               ],

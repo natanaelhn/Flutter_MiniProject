@@ -1,4 +1,4 @@
-import 'package:flutter_application_mini_project/model/anime_service/anime_detail/anime_detail_object.dart';
+import 'package:flutter_application_mini_project/model/anime_detail_object.dart';
 
 class RelatedAnimeObject{
 

@@ -1,9 +1,10 @@
-import 'package:flutter_application_mini_project/model/access_token_service/access_token_object.dart';
-import 'package:flutter_application_mini_project/model/access_token_service/access_token_service.dart';
-import 'package:flutter_application_mini_project/model/my_token.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_mini_project/model/access_token_object.dart';
+import 'package:flutter_application_mini_project/services/access_token_service.dart';
+import 'package:flutter_application_mini_project/utils/my_token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashViewModel{
+class SplashProvider with ChangeNotifier{
   
   //refresh an old access token to new access token
   Future<bool> gainRefreshToken({required String refreshToken}) async{

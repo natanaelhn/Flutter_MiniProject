@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_image_loading_indicator/my_image_loading_indicator.dart';
-import 'package:flutter_application_mini_project/model/anime_service/anime_detail/anime_detail_object.dart';
-import 'package:flutter_application_mini_project/model/anime_service/anime_service.dart';
-import 'package:flutter_application_mini_project/model/my_token.dart';
+import 'package:flutter_application_mini_project/model/anime_detail_object.dart';
+import 'package:flutter_application_mini_project/services/anime_service.dart';
 import 'package:flutter_application_mini_project/screen/detail_anime/detail_anime_screen.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
 

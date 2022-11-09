@@ -1,6 +1,6 @@
-class MyListStatus{
+class MyListStatusObject{
 
-  MyListStatus({
+  MyListStatusObject({
     this.status,
     this.score,
     this.numEpisodesWatched,
@@ -28,9 +28,18 @@ class MyListStatus{
   final String? comments;
   final String? updatedAt;
 
-  factory MyListStatus.fromJSON(Map<String, dynamic> json){
+  String get scoreFormatted{
+    if(score != null && score != 0){
+      return score.toString();
+    }
+    else{
+      return '-';
+    }
+  }
 
-    return MyListStatus(
+  factory MyListStatusObject.fromJSON(Map<String, dynamic> json){
+
+    return MyListStatusObject(
       status: (json.containsKey('status'))? json['status'] : null,
       score: (json.containsKey('score'))? json['score'] : null,
       numEpisodesWatched: (json.containsKey('num_episodes_watched'))? json['num_episodes_watched'] : null,
@@ -40,7 +49,7 @@ class MyListStatus{
       priority: (json.containsKey('priority'))? json['priority'] : null,
       numTimesRewatched: (json.containsKey('num_times_rewatched'))? json['num_times_rewatched'] : null,
       rewatchValue: (json.containsKey('rewatch_value'))? json['rewatch_value'] : null,
-      tags: (json.containsKey('tags'))? json['tags'] : null,
+      tags: (json.containsKey('tags'))? json['tags'].cast<String>() : null,
       comments: (json.containsKey('comments'))? json['comments'] : null,
       updatedAt: (json.containsKey('updated_at'))? json['updated_at'] : null,
     );

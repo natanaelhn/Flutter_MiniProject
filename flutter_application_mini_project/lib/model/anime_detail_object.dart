@@ -1,6 +1,6 @@
-import 'package:flutter_application_mini_project/model/anime_service/anime_detail/support_object/anime_statistic_object.dart';
-import 'package:flutter_application_mini_project/model/anime_service/anime_detail/support_object/my_list_status.dart';
-import 'package:flutter_application_mini_project/model/anime_service/anime_detail/support_object/related_anime_object.dart';
+import 'package:flutter_application_mini_project/model/anime_statistic_object.dart';
+import 'package:flutter_application_mini_project/model/my_list_status_object.dart';
+import 'package:flutter_application_mini_project/model/related_anime_object.dart';
 import 'package:recase/recase.dart';
 
 class AnimeDetailObject{
@@ -68,7 +68,7 @@ class AnimeDetailObject{
   List<AnimeDetailObject>? recommendation;
   List<String>? studios;
   AnimeStatisticObject? statistics;
-  MyListStatus? myListStatus;
+  MyListStatusObject? myListStatus;
 
 
 
@@ -127,6 +127,10 @@ class AnimeDetailObject{
     return '?';
   }
 
+  String get broadcastDayTimeFormatted{
+    return '$broadcastDayFormatted, $broadcastTime (JST)';
+  }
+
   String get ratingFormatted{
     List<String> temp = ['g', 'pg', 'pg_13', 'r', 'r+', 'rx'];
     List<String> temp2 = [
@@ -154,6 +158,18 @@ class AnimeDetailObject{
     }
 
     return '?';
+  }
+
+  String get numEpisodeFormatted{
+
+    if(numEpisode != 0){
+      return numEpisode.toString();
+    }
+
+    else{
+      return '?';
+    }
+
   }
 
 
@@ -263,7 +279,7 @@ class AnimeDetailObject{
       recommendation: (json.containsKey('recommendations'))? getRecommmendation(json['recommendations'].cast<Map<String, dynamic>>()) : null,
       studios: (json.containsKey('studios'))? getListStudios(json['studios'].cast<Map<String, dynamic>>()) : null,
       statistics: (json.containsKey('statistics'))? AnimeStatisticObject.fromJSON(json['statistics']['status']) : null,
-      myListStatus: (json.containsKey('my_list_status'))? MyListStatus.fromJSON(json['my_list_status']) : null,
+      myListStatus: (json.containsKey('my_list_status'))? MyListStatusObject.fromJSON(json['my_list_status']) : null,
     );
   }
 

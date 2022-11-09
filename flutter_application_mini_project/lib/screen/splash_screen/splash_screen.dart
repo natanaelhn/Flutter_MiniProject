@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/screen/authorization/authorization_screen.dart';
 import 'package:flutter_application_mini_project/screen/pick_favorite/pick_favorite.dart';
-import 'package:flutter_application_mini_project/screen/splash_screen/splash_view_model.dart';
+import 'package:flutter_application_mini_project/screen/splash_screen/splash_provider.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
-import 'package:flutter_application_mini_project/model/my_token.dart';
+import 'package:flutter_application_mini_project/utils/my_token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         pageScreen = const AuthorizationScreen();
       }
       else{
-        SplashViewModel splashViewModel = SplashViewModel();
+        SplashProvider splashViewModel = SplashProvider();
 
         bool validAccess = await splashViewModel.gainRefreshToken(refreshToken: refreshToken);
         if(validAccess){
