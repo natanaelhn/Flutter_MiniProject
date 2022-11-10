@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,11 +18,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  Timer? timer;
+
   @override
   void initState() {
 
     super.initState();
-    Future.delayed(const Duration(milliseconds: 1500), () async{
+    timer = Timer(const Duration(milliseconds: 1500), () async{
 
       final prefs = await SharedPreferences.getInstance();
 
@@ -49,6 +52,12 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => pageScreen!,));
       }
     },);
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
 
