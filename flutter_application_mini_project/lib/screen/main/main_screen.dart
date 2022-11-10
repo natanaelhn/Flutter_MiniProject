@@ -160,7 +160,9 @@ class _MainScreenState extends State<MainScreen> {
           Consumer<MainProvider>(
             builder: (context, value, child) => Top10ListContainer(
               listAnimeDetail: mainProvider.getListTopAiring().listAnimeDetail, 
-              title: 'Top Airing',),
+              title: 'Top Airing',
+              rankingType: 'airing',
+            ),
           ),
 
 
@@ -170,7 +172,9 @@ class _MainScreenState extends State<MainScreen> {
           Consumer<MainProvider>(
             builder: (context, value, child) => Top10ListContainer(
               listAnimeDetail: mainProvider.getListTopUpcoming().listAnimeDetail, 
-              title: 'Top Upcoming Anime',),
+              title: 'Top Upcoming Anime',
+              rankingType: 'upcoming',
+            ),
           ),
 
 
@@ -180,7 +184,9 @@ class _MainScreenState extends State<MainScreen> {
           (MyToken.accessToken != null)? Consumer<MainProvider>(
             builder: (context, value, child) => Top10ListContainer(
               listAnimeDetail: mainProvider.getListSuggestion().listAnimeDetail, 
-              title: 'Anime For You',),
+              title: 'Anime For You',
+              rankingType: 'suggestion',
+            ),
           ) : const SizedBox(),
 
           (MyToken.accessToken != null)? const MyColumnDivider(): const SizedBox(),

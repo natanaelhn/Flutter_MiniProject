@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mini_project/common_widgets/my_image_loading_indicator/my_image_loading_indicator.dart';
 import 'package:flutter_application_mini_project/model/anime_detail_object.dart';
+import 'package:flutter_application_mini_project/screen/more_list/more_list_screen.dart';
 import 'package:flutter_application_mini_project/services/anime_service.dart';
 import 'package:flutter_application_mini_project/screen/detail_anime/detail_anime_screen.dart';
 import 'package:flutter_application_mini_project/utils/my_color.dart';
 
 class Top10ListContainer extends StatefulWidget {
-  const Top10ListContainer({super.key, required this.listAnimeDetail, required this.title,});
+  const Top10ListContainer({super.key, required this.listAnimeDetail, required this.title, required this.rankingType});
 
   final List<AnimeDetailObject> listAnimeDetail;
   final String title;
+  final String rankingType;
 
   @override
   State<Top10ListContainer> createState() => _Top10ListContainerState();
@@ -141,7 +143,9 @@ class _Top10ListContainerState extends State<Top10ListContainer> {
                     child: Material(
                       color: MyColor.primaryColor,
                       child: InkWell(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MoreListScreen(rankingType: widget.rankingType,),));
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           height: height,

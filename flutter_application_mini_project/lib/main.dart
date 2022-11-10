@@ -6,6 +6,7 @@ import 'package:flutter_application_mini_project/screen/authorization/authorizat
 import 'package:flutter_application_mini_project/screen/detail_anime/widgets/top_detail_container/top_detail_container_provider.dart';
 import 'package:flutter_application_mini_project/screen/edit_my_list_anime/edit_my_list_anime_provider.dart';
 import 'package:flutter_application_mini_project/screen/main/main_provider.dart';
+import 'package:flutter_application_mini_project/screen/more_list/more_list_provider.dart';
 import 'package:flutter_application_mini_project/screen/my_list_anime/my_list_anime_provider.dart';
 import 'package:flutter_application_mini_project/screen/pick_favorite/pick_favorite_provider.dart';
 import 'package:flutter_application_mini_project/screen/splash_screen/splash_screen.dart';
@@ -51,6 +52,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => TopDetailContainerProvider(),),
       ChangeNotifierProvider(create: (context) => MyListAnimeProvider(),),
       ChangeNotifierProvider(create: (context) => EditMyListAnimeProvider(),),
+      ChangeNotifierProvider(create: (context) => MoreListProvider(),),
     ],
     child: const MyApp()
   ));
